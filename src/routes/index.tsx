@@ -74,8 +74,8 @@ function Index() {
   return (
     <SiteShell>
       {/* HERO */}
-      <section className="border-b border-[var(--border)]">
-        <div className="max-w-7xl mx-auto px-6 py-20 md:py-28 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
+      <section className="brass-sheen bg-[var(--paper)] border-b border-[var(--border)]">
+        <div className="content-shell py-24 md:py-32 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
           <div className="reveal">
             <div className="eyebrow">The Baby Boomer exit rail for hospitality</div>
             <h1 className="mt-6 font-display text-5xl md:text-6xl leading-[1.02] text-ink">
@@ -233,17 +233,18 @@ function Index() {
       </section>
 
       {/* CLOSING BAND */}
-      <section className="bg-ink text-[var(--paper)]">
-        <div className="max-w-4xl mx-auto px-6 py-24 text-center">
+      <section className="brass-sheen bg-ink text-[var(--paper)]">
+        <div className="content-shell max-w-4xl py-24 md:py-32 text-center">
           <h2 className="font-display text-6xl md:text-7xl text-[var(--brass)] italic">Sell, baby, sell.</h2>
-          <p className="mt-8 text-lg text-[var(--paper)]/80 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-8 text-lg text-[var(--paper)]/85 max-w-2xl mx-auto leading-relaxed">
             Twenty years of 5-star reviews deserve a better exit than a shoebox of receipts.
           </p>
-          <Link to="/valuation" className="mt-10 inline-flex items-center justify-center bg-[var(--brass)] text-ink px-8 py-4 text-sm font-medium tracking-wide hover:bg-[var(--paper)] transition-colors">
+          <Link to="/valuation" className="no-underline mt-10 inline-flex items-center justify-center bg-[var(--brass)] text-ink px-8 min-h-[52px] font-semibold text-lg tracking-wide hover:bg-[var(--paper)] transition-colors rounded-lg">
             Get your free valuation
           </Link>
         </div>
       </section>
+
     </SiteShell>
   );
 }
