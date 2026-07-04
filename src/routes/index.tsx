@@ -5,6 +5,7 @@ import { SiteShell } from "@/components/sbs/SiteShell";
 import { DealTicket } from "@/components/sbs/DealTicket";
 import { SEED_LISTINGS } from "@/lib/sbs-data";
 import { supabase } from "@/integrations/supabase/client";
+import heroBg from "@/assets/hero-inn.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -74,8 +75,20 @@ function Index() {
   return (
     <SiteShell>
       {/* HERO */}
-      <section className="brass-sheen bg-[var(--paper)] border-b border-[var(--border)]">
-        <div className="content-shell py-24 md:py-32 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
+      <section
+        className="relative brass-sheen border-b border-[var(--border)] bg-[var(--paper)] bg-cover bg-center"
+        style={{ backgroundImage: `url(${heroBg})` }}
+      >
+        {/* Readability wash — warm paper on the left, softer on the right */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(247,243,235,0.96) 0%, rgba(247,243,235,0.86) 42%, rgba(247,243,235,0.35) 72%, rgba(247,243,235,0.15) 100%)",
+          }}
+        />
+        <div className="relative content-shell py-24 md:py-32 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
           <div className="reveal">
             <div className="eyebrow">The Baby Boomer exit rail for hospitality</div>
             <h1 className="mt-6 font-display text-5xl md:text-6xl leading-[1.02] text-ink">
