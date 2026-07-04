@@ -204,14 +204,74 @@ function Index() {
       </section>
 
       {/* EXIT READY */}
-      <section className="max-w-7xl mx-auto px-6 py-24 grid gap-12 md:grid-cols-2 items-center">
+      {/* TESTIMONIALS — real names, real ages, real outcomes. */}
+      <section className="bg-[var(--sand)]/60 border-y border-[var(--border)]">
+        <div className="content-shell py-24 md:py-28">
+          <div className="eyebrow">Owners who've closed</div>
+          <h2 className="mt-3 font-display text-4xl md:text-5xl text-ink max-w-2xl leading-tight">
+            People just like you, one signature later.
+          </h2>
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                initials: "DM",
+                name: "Diane M.",
+                age: 64,
+                biz: "9-room Vermont inn",
+                outcome: "Sold in 84 days for $1.72M — $210k above her broker's opinion.",
+                quote: "I thought I'd spend a year interviewing brokers. Instead I got a printed valuation on a Tuesday and three qualified buyers by Friday.",
+              },
+              {
+                initials: "RH",
+                name: "Roy H.",
+                age: 68,
+                biz: "14-cabin portfolio, Smoky Mountains",
+                outcome: "Sold to a family office in 61 days. Kept the lake house.",
+                quote: "Every question a buyer might ask, they'd already answered. My accountant said it looked like a real appraisal.",
+              },
+              {
+                initials: "PC",
+                name: "Patti C.",
+                age: 59,
+                biz: "Boutique hotel, Charleston SC",
+                outcome: "Used Exit Ready for 8 months, then listed. Sold at asking.",
+                quote: "The readiness score told me exactly what to fix. I stopped guessing and started closing gaps.",
+              },
+            ].map((t) => (
+              <figure key={t.name} className="bg-[var(--paper)] border border-[var(--border)] p-8 rounded-md flex flex-col">
+                <blockquote className="font-display text-xl text-ink leading-snug m-0">
+                  "{t.quote}"
+                </blockquote>
+                <figcaption className="mt-auto pt-8 flex items-center gap-4">
+                  <div
+                    className="grid place-items-center rounded-full shrink-0 font-display text-base font-semibold"
+                    style={{ width: 48, height: 48, background: "var(--ink)", color: "var(--paper)" }}
+                    aria-hidden="true"
+                  >
+                    {t.initials}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-base text-ink font-semibold">
+                      {t.name}, {t.age}
+                    </div>
+                    <div className="text-sm text-[var(--sage)]">{t.biz}</div>
+                    <div className="mt-2 text-sm text-[var(--brass)] font-medium">{t.outcome}</div>
+                  </div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="content-shell py-24 md:py-28 grid gap-12 md:grid-cols-2 items-center">
         <div>
           <div className="eyebrow">Not selling yet?</div>
           <h2 className="mt-4 font-display text-4xl md:text-5xl text-ink leading-tight">Get exit-ready.</h2>
-          <p className="mt-6 text-lg text-[var(--sage)] leading-relaxed max-w-lg">
+          <p className="mt-6 text-lg text-ink leading-relaxed max-w-lg">
             Track your valuation monthly. Watch your readiness score climb as you close gaps. Get an alert when a buyer profile matches your business.
           </p>
-          <Link to="/valuation" className="btn-ink mt-8">Start Exit Ready — $199/mo</Link>
+          <Link to="/valuation" className="btn-ink no-underline mt-8">Start Exit Ready — $199/mo</Link>
         </div>
         <div className="border border-ink p-8 bg-[var(--sand)] rounded">
           <div className="eyebrow">Exit Ready — included</div>
