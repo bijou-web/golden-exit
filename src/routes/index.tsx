@@ -82,21 +82,27 @@ function Index() {
       <section
         className="relative overflow-hidden brass-sheen border-b border-[var(--border)] bg-[var(--paper)]"
       >
-        {/* Full-bleed background photo */}
+        {/* Background layers wrapper — inline position:absolute beats brass-sheen's `> * { position: relative }` reset. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroBg})` }}
-        />
-        {/* Readability wash — darker on the left where the headline sits */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(90deg, rgba(247,243,235,0.92) 0%, rgba(247,243,235,0.78) 38%, rgba(247,243,235,0.35) 65%, rgba(247,243,235,0.15) 100%)",
-          }}
-        />
+          style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+        >
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${heroBg})` }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(247,243,235,0.94) 0%, rgba(247,243,235,0.82) 32%, rgba(247,243,235,0.40) 55%, rgba(247,243,235,0) 78%)",
+            }}
+          />
+          <div
+            className="hidden md:block absolute bottom-8 left-8 w-24 h-24 border-l border-b"
+            style={{ borderColor: "color-mix(in oklab, var(--brass) 30%, transparent)" }}
+          />
+        </div>
         <div className="relative content-shell py-24 md:py-32 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
           <div className="reveal">
             <div className="eyebrow">The Baby Boomer exit rail for hospitality</div>
