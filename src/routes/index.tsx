@@ -16,14 +16,16 @@ function Index() {
       <section className="border-b border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-6 py-20 md:py-28 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
           <div className="reveal">
-            <div className="eyebrow">The exit rail for hospitality</div>
+            <div className="eyebrow">The Baby Boomer exit rail for hospitality</div>
             <h1 className="mt-6 font-display text-5xl md:text-6xl leading-[1.02] text-ink">
-              Know what your hospitality business is worth.
+              Baby Boomers built it.
               <br />
-              <span className="text-[var(--brass)]">In 60 seconds.</span>
+              Now know what it's worth —
+              <br />
+              <span className="text-[var(--brass)]">in 60 seconds.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg text-[var(--sage)] leading-relaxed">
-              Connect your booking data. Get a real valuation, an exit-readiness score, and qualified buyers — without a broker who's never heard of ADR.
+              The exit marketplace built for the Boomer generation of hospitality owners. Connect your booking data. Get a real valuation, an exit-readiness score, and qualified buyers — without a broker who's never heard of ADR.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/valuation" className="btn-ink">Get your free valuation</Link>
