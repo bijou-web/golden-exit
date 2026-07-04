@@ -1,15 +1,76 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { SiteShell } from "@/components/sbs/SiteShell";
 import { DealTicket } from "@/components/sbs/DealTicket";
 import { SEED_LISTINGS } from "@/lib/sbs-data";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
 function Index() {
-  const featured = SEED_LISTINGS.slice(0, 3);
+  type Featured = {
+    id: string;
+    headline: string;
+    region: string;
+    ask_low: number;
+    ask_high: number;
+    readiness: number;
+    verified: boolean;
+    serial: string;
+    methodology: string;
+    revenue_band: string;
+    days_listed: number;
+    hero_image_url: string | null;
+  };
+  const seedFeatured: Featured[] = SEED_LISTINGS.slice(0, 3).map((l) => ({
+    id: l.id,
+    headline: `${l.business_type.replace("_", " ")} · ${l.units} units`,
+    region: l.region,
+    ask_low: l.ask_low,
+    ask_high: l.ask_high,
+    readiness: l.readiness,
+    verified: l.verified,
+    serial: l.serial,
+    methodology: l.methodology,
+    revenue_band: l.revenue_band,
+    days_listed: l.days_listed,
+    hero_image_url: null,
+  }));
+  const [featured, setFeatured] = useState<Featured[]>(seedFeatured);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("listings")
+        .select("id, headline, region, asking_low, asking_high, readiness_score, verified, created_at, hero_image_url")
+        .eq("status", "live")
+        .not("hero_image_url", "is", null)
+        .order("created_at", { ascending: false })
+        .limit(3);
+      if (!data || data.length === 0) return;
+      const dayMs = 1000 * 60 * 60 * 24;
+      setFeatured(
+        data.map((l: any) => ({
+          id: l.id,
+          headline: l.headline ?? "Hospitality business",
+          region: l.region ?? "—",
+          ask_low: Number(l.asking_low ?? 0),
+          ask_high: Number(l.asking_high ?? l.asking_low ?? 0),
+          readiness: l.readiness_score ?? 72,
+          verified: !!l.verified,
+          serial: `SBS-${l.id.slice(0, 8).toUpperCase()}`,
+          methodology: "Scraped listing",
+          revenue_band: "$—",
+          days_listed: Math.max(1, Math.floor((Date.now() - new Date(l.created_at).getTime()) / dayMs)),
+          hero_image_url: l.hero_image_url,
+        })),
+      );
+    })();
+  }, []);
+
   return (
     <SiteShell>
       {/* HERO */}
