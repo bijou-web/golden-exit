@@ -230,6 +230,17 @@ function ValuationPage() {
           )}
         </div>
 
+        {/* Security row — plain words, no jargon. */}
+        <div className="mt-10 flex items-start gap-3 text-sm text-[var(--sage)] border-t border-[var(--border)] pt-6">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0 mt-0.5 text-[var(--brass)]">
+            <rect x="3" y="11" width="18" height="10" rx="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          <p className="m-0">
+            Your numbers are encrypted and never shared without your approval. No broker calls, no cold emails — you decide who sees your business.
+          </p>
+        </div>
+
         <div className="mt-12 flex justify-between">
           <button onClick={() => setStep((s) => Math.max(1, s - 1))} className="btn-outline-ink" style={{ visibility: step === 1 ? "hidden" : "visible" }}>Back</button>
           {step < 3 ? (
