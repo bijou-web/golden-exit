@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/sbs/SiteShell";
 import { DealTicket } from "@/components/sbs/DealTicket";
-import { SEED_LISTINGS, shortTypeLabel } from "@/lib/sbs-data";
+import { SEED_LISTINGS } from "@/lib/sbs-data";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -173,8 +173,5 @@ function Index() {
     </SiteShell>
   );
 }
-
-// silence unused import warning helpers
-void shortTypeLabel;
   );
 }
