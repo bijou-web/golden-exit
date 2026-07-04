@@ -65,6 +65,11 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
         const PLACEHOLDER_IMG_RE =
           /(facebookDefaultImage|default[-_]?(og|share|image)|placeholder|logo\.(png|svg|jpg))/i;
         const pickHero = (meta: any, markdown: string | undefined, screenshot: string | undefined) => {
+          // Prefer Firecrawl's own screenshot URL — source sites (BizBuySell,
+          // BusinessesForSale) hotlink-block their CDN images with Akamai, so
+          // metadata og:image URLs return 403 in the browser. Firecrawl-hosted
+          // screenshots are always hotlinkable.
+          if (typeof screenshot === "string" && /^https?:\/\//.test(screenshot)) return screenshot;
           const candidates: string[] = [
             meta?.ogImage,
             meta?.og_image,
@@ -74,7 +79,11 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
             meta?.image,
           ].filter(Boolean);
           for (const c of candidates) {
-            if (typeof c === "string" && !PLACEHOLDER_IMG_RE.test(c)) return c;
+            if (typeof c !== "string") continue;
+            if (PLACEHOLDER_IMG_RE.test(c)) continue;
+            // Skip known hotlink-blocked CDNs
+            if (/images\.bizbuysell\.com|businessesforsale\.com/i.test(c)) continue;
+            return c;
           }
           // Pull first inline image from markdown that looks like a photo
           if (markdown) {
@@ -84,10 +93,10 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
               const url = m[1];
               if (PLACEHOLDER_IMG_RE.test(url)) continue;
               if (/sprite|icon|logo|avatar/i.test(url)) continue;
+              if (/images\.bizbuysell\.com|businessesforsale\.com/i.test(url)) continue;
               return url;
             }
           }
-          if (screenshot) return screenshot;
           return null;
         };
 
