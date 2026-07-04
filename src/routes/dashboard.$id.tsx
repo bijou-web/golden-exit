@@ -34,28 +34,29 @@ function DashboardPage() {
           hotel: "hotel",
           bnb_inn: "bnb_inn",
         };
+        const anyRow = row as any;
         const mapped: Valuation = {
-          id: row.id,
-          serial: row.serial ?? "SBS-DRAFT",
-          issued_at: row.created_at ?? new Date().toISOString(),
-          low: Number(row.low),
-          high: Number(row.high),
-          multiple_used: row.multiple_used ?? "",
-          methodology: row.methodology ?? "",
-          readiness_score: row.readiness_score ?? 0,
-          subscores: row.subscores ?? {
+          id: anyRow.id,
+          serial: anyRow.serial ?? "SBS-DRAFT",
+          issued_at: anyRow.created_at ?? new Date().toISOString(),
+          low: Number(anyRow.low),
+          high: Number(anyRow.high),
+          multiple_used: anyRow.multiple_used ?? "",
+          methodology: anyRow.methodology ?? "",
+          readiness_score: anyRow.readiness_score ?? 0,
+          subscores: (anyRow.subscores as Valuation["subscores"]) ?? {
             financial_records: 0,
             revenue_trend: 0,
             review_health: 0,
             owner_dependency: 0,
             channel_mix: 0,
           },
-          drivers: row.drivers ?? [],
-          gaps: (row.gaps ?? []).map((g: any) => ({
+          drivers: (anyRow.drivers as string[]) ?? [],
+          gaps: ((anyRow.gaps as any[]) ?? []).map((g: any) => ({
             label: g.area ?? g.label ?? "",
             fix: g.fix ?? g.impact ?? "",
           })),
-          teaser: row.teaser_paragraph ?? "",
+          teaser: anyRow.teaser_paragraph ?? "",
           input: {
             business_type: inputMap[bt] ?? "vacation_rental",
             units: req.units ?? 0,
