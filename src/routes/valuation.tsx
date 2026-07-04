@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/sbs/SiteShell";
 import { computeValuation, type BusinessType, type ValuationInput } from "@/lib/sbs-data";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/valuation")({
   head: () => ({
@@ -20,6 +21,20 @@ const STATUSES = [
   "Grading your reviews…",
   "Stamping your Deal Ticket…",
 ];
+
+const BUSINESS_TYPE_DB: Record<BusinessType, string> = {
+  vacation_rental: "vr_portfolio",
+  boutique_hotel: "boutique_hotel",
+  hotel: "hotel",
+  bnb_inn: "bnb_inn",
+};
+
+const TIMELINE_DB: Record<string, string> = {
+  now: "now",
+  "1-2": "1_2_years",
+  "3+": "3_plus_years",
+  curious: "curious",
+};
 
 function ValuationPage() {
   const navigate = useNavigate();
@@ -48,12 +63,59 @@ function ValuationPage() {
 
   async function submit() {
     setStatus(0);
-    for (let i = 0; i < STATUSES.length; i++) {
-      await new Promise((r) => setTimeout(r, 800));
-      setStatus(i);
+    // Animate status while the edge function runs
+    let cancelled = false;
+    (async () => {
+      for (let i = 0; i < STATUSES.length; i++) {
+        if (cancelled) return;
+        await new Promise((r) => setTimeout(r, 1400));
+        if (cancelled) return;
+        setStatus(i);
+      }
+    })();
+
+    try {
+      const input = form as ValuationInput;
+      const requestRow = {
+        email: input.email,
+        full_name: input.name,
+        business_type: BUSINESS_TYPE_DB[input.business_type],
+        units: input.units,
+        market_city: input.city,
+        market_state: input.state,
+        gross_revenue_ltm: input.revenue,
+        sde: input.noi ?? null,
+        sde_unknown: input.noi === null || input.noi === undefined,
+        occupancy_pct: input.occupancy,
+        adr: input.adr,
+        direct_booking_pct: input.direct_pct,
+        avg_review_score: input.review_score,
+        owner_hours_per_week: input.owner_hours,
+        sell_timeline: TIMELINE_DB[input.timeline as string] ?? "curious",
+      };
+
+      const { data: req, error: reqErr } = await supabase
+        .from("valuation_requests")
+        .insert(requestRow)
+        .select()
+        .single();
+      if (reqErr) throw reqErr;
+
+      const { data: fnData, error: fnErr } = await supabase.functions.invoke(
+        "valuation-engine",
+        { body: { ...req, request_id: req.id } },
+      );
+      if (fnErr) throw fnErr;
+      cancelled = true;
+      const valuationId = (fnData as { id?: string } | null)?.id;
+      if (!valuationId) throw new Error("Valuation service returned no id");
+      navigate({ to: "/dashboard/$id", params: { id: valuationId } });
+    } catch (err) {
+      cancelled = true;
+      console.error("Valuation submit failed, falling back to local:", err);
+      const v = computeValuation(form as ValuationInput);
+      navigate({ to: "/dashboard/$id", params: { id: v.id } });
     }
-    const v = computeValuation(form as ValuationInput);
-    navigate({ to: "/dashboard/$id", params: { id: v.id } });
   }
 
   if (status !== null) {
