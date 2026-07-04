@@ -17,6 +17,8 @@ import { Route as BuyersRouteImport } from './routes/buyers'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ListingIdRouteImport } from './routes/listing.$id'
 import { Route as DashboardIdRouteImport } from './routes/dashboard.$id'
+import { Route as AdminImportRouteImport } from './routes/admin.import'
+import { Route as ApiPublicScrapeListingsRouteImport } from './routes/api/public/scrape-listings'
 
 const ValuationRoute = ValuationRouteImport.update({
   id: '/valuation',
@@ -58,6 +60,16 @@ const DashboardIdRoute = DashboardIdRouteImport.update({
   path: '/dashboard/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminImportRoute = AdminImportRouteImport.update({
+  id: '/admin/import',
+  path: '/admin/import',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicScrapeListingsRoute = ApiPublicScrapeListingsRouteImport.update({
+  id: '/api/public/scrape-listings',
+  path: '/api/public/scrape-listings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -66,8 +78,10 @@ export interface FileRoutesByFullPath {
   '/marketplace': typeof MarketplaceRoute
   '/sell': typeof SellRoute
   '/valuation': typeof ValuationRoute
+  '/admin/import': typeof AdminImportRoute
   '/dashboard/$id': typeof DashboardIdRoute
   '/listing/$id': typeof ListingIdRoute
+  '/api/public/scrape-listings': typeof ApiPublicScrapeListingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -76,8 +90,10 @@ export interface FileRoutesByTo {
   '/marketplace': typeof MarketplaceRoute
   '/sell': typeof SellRoute
   '/valuation': typeof ValuationRoute
+  '/admin/import': typeof AdminImportRoute
   '/dashboard/$id': typeof DashboardIdRoute
   '/listing/$id': typeof ListingIdRoute
+  '/api/public/scrape-listings': typeof ApiPublicScrapeListingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -87,8 +103,10 @@ export interface FileRoutesById {
   '/marketplace': typeof MarketplaceRoute
   '/sell': typeof SellRoute
   '/valuation': typeof ValuationRoute
+  '/admin/import': typeof AdminImportRoute
   '/dashboard/$id': typeof DashboardIdRoute
   '/listing/$id': typeof ListingIdRoute
+  '/api/public/scrape-listings': typeof ApiPublicScrapeListingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -99,8 +117,10 @@ export interface FileRouteTypes {
     | '/marketplace'
     | '/sell'
     | '/valuation'
+    | '/admin/import'
     | '/dashboard/$id'
     | '/listing/$id'
+    | '/api/public/scrape-listings'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -109,8 +129,10 @@ export interface FileRouteTypes {
     | '/marketplace'
     | '/sell'
     | '/valuation'
+    | '/admin/import'
     | '/dashboard/$id'
     | '/listing/$id'
+    | '/api/public/scrape-listings'
   id:
     | '__root__'
     | '/'
@@ -119,8 +141,10 @@ export interface FileRouteTypes {
     | '/marketplace'
     | '/sell'
     | '/valuation'
+    | '/admin/import'
     | '/dashboard/$id'
     | '/listing/$id'
+    | '/api/public/scrape-listings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -130,8 +154,10 @@ export interface RootRouteChildren {
   MarketplaceRoute: typeof MarketplaceRoute
   SellRoute: typeof SellRoute
   ValuationRoute: typeof ValuationRoute
+  AdminImportRoute: typeof AdminImportRoute
   DashboardIdRoute: typeof DashboardIdRoute
   ListingIdRoute: typeof ListingIdRoute
+  ApiPublicScrapeListingsRoute: typeof ApiPublicScrapeListingsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -192,6 +218,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/import': {
+      id: '/admin/import'
+      path: '/admin/import'
+      fullPath: '/admin/import'
+      preLoaderRoute: typeof AdminImportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/scrape-listings': {
+      id: '/api/public/scrape-listings'
+      path: '/api/public/scrape-listings'
+      fullPath: '/api/public/scrape-listings'
+      preLoaderRoute: typeof ApiPublicScrapeListingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -202,8 +242,10 @@ const rootRouteChildren: RootRouteChildren = {
   MarketplaceRoute: MarketplaceRoute,
   SellRoute: SellRoute,
   ValuationRoute: ValuationRoute,
+  AdminImportRoute: AdminImportRoute,
   DashboardIdRoute: DashboardIdRoute,
   ListingIdRoute: ListingIdRoute,
+  ApiPublicScrapeListingsRoute: ApiPublicScrapeListingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
