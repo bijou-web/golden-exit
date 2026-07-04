@@ -1,8 +1,45 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SiteShell } from "@/components/sbs/SiteShell";
 import { DealTicket } from "@/components/sbs/DealTicket";
 import { SEED_LISTINGS, type BusinessType, shortTypeLabel } from "@/lib/sbs-data";
+import { supabase } from "@/integrations/supabase/client";
+
+type DbListing = {
+  id: string;
+  business_type: string;
+  units: number | null;
+  region: string | null;
+  headline: string | null;
+  asking_low: number | null;
+  asking_high: number | null;
+  readiness_score: number | null;
+  verified: boolean | null;
+  created_at: string;
+};
+
+const DB_TO_TYPE: Record<string, BusinessType> = {
+  vr_portfolio: "vacation_rental",
+  boutique_hotel: "boutique_hotel",
+  hotel: "hotel",
+  bnb_inn: "bnb_inn",
+};
+
+type ListingRow = {
+  id: string;
+  business_type: BusinessType;
+  units: number;
+  region: string;
+  headline: string;
+  ask_low: number;
+  ask_high: number;
+  readiness: number;
+  verified: boolean;
+  serial: string;
+  methodology: string;
+  revenue_band: string;
+  days_listed: number;
+};
 
 export const Route = createFileRoute("/marketplace")({
   head: () => ({
@@ -18,8 +55,58 @@ function MarketplacePage() {
   const [type, setType] = useState<BusinessType | "all">("all");
   const [sort, setSort] = useState<"new" | "price" | "readiness">("new");
   const [minReady, setMinReady] = useState(0);
+  const [dbRows, setDbRows] = useState<ListingRow[] | null>(null);
 
-  const filtered = SEED_LISTINGS
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("listings")
+        .select("id, business_type, units, region, headline, asking_low, asking_high, readiness_score, verified, created_at")
+        .eq("status", "live")
+        .order("created_at", { ascending: false });
+      if (!data) return;
+      const mapped: ListingRow[] = (data as DbListing[]).map((l) => {
+        const dayMs = 1000 * 60 * 60 * 24;
+        const days = Math.max(1, Math.floor((Date.now() - new Date(l.created_at).getTime()) / dayMs));
+        return {
+          id: l.id,
+          business_type: DB_TO_TYPE[l.business_type] ?? "vacation_rental",
+          units: l.units ?? 0,
+          region: l.region ?? "—",
+          headline: l.headline ?? "",
+          ask_low: Number(l.asking_low ?? 0),
+          ask_high: Number(l.asking_high ?? l.asking_low ?? 0),
+          readiness: l.readiness_score ?? 0,
+          verified: !!l.verified,
+          serial: `SBS-${l.id.slice(0, 8).toUpperCase()}`,
+          methodology: "Verified booking data",
+          revenue_band: "$—",
+          days_listed: days,
+        };
+      });
+      setDbRows(mapped);
+    })();
+  }, []);
+
+  const source: ListingRow[] = dbRows && dbRows.length > 0
+    ? dbRows
+    : SEED_LISTINGS.map((l) => ({
+        id: l.id,
+        business_type: l.business_type,
+        units: l.units,
+        region: l.region,
+        headline: `${shortTypeLabel[l.business_type]} · ${l.units} ${l.business_type === "vacation_rental" ? "units" : "keys"}`,
+        ask_low: l.ask_low,
+        ask_high: l.ask_high,
+        readiness: l.readiness,
+        verified: l.verified,
+        serial: l.serial,
+        methodology: l.methodology,
+        revenue_band: l.revenue_band,
+        days_listed: l.days_listed,
+      }));
+
+  const filtered = source
     .filter((l) => (type === "all" ? true : l.business_type === type))
     .filter((l) => l.readiness >= minReady)
     .sort((a, b) => {
@@ -69,7 +156,7 @@ function MarketplacePage() {
                 high={l.ask_high}
                 methodology={l.methodology}
                 readiness={l.readiness}
-                headline={`${shortTypeLabel[l.business_type]} · ${l.units} ${l.business_type === "vacation_rental" ? "units" : "keys"}`}
+                headline={l.headline || `${shortTypeLabel[l.business_type]} · ${l.units} ${l.business_type === "vacation_rental" ? "units" : "keys"}`}
                 subhead={`${l.region} · ${l.revenue_band} revenue · ${l.days_listed}d listed`}
               />
             </Link>
