@@ -255,13 +255,16 @@ function ValuationPage() {
 }
 
 const inputCls =
-  "w-full bg-transparent border-b border-[var(--border)] px-0 py-3 text-lg text-ink focus:outline-none focus:border-ink font-mono-num";
+  "w-full bg-transparent border border-[var(--border)] rounded-md px-4 text-lg text-ink focus:outline-none focus:border-ink font-mono-num";
+// 52px input height enforced via style below
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="eyebrow block mb-3">{label}</label>
-      {children}
+      <label className="block mb-2 text-base font-medium text-ink">{label}</label>
+      <div style={{ minHeight: 52 }} className="[&_input]:h-[52px] [&_input]:min-h-[52px]">
+        {children}
+      </div>
     </div>
   );
 }
