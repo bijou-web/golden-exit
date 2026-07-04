@@ -62,12 +62,45 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
         const scraped: any[] = [];
         const errors: string[] = [];
 
+        const PLACEHOLDER_IMG_RE =
+          /(facebookDefaultImage|default[-_]?(og|share|image)|placeholder|logo\.(png|svg|jpg))/i;
+        const pickHero = (meta: any, markdown: string | undefined, screenshot: string | undefined) => {
+          const candidates: string[] = [
+            meta?.ogImage,
+            meta?.og_image,
+            meta?.["og:image"],
+            meta?.twitterImage,
+            meta?.["twitter:image"],
+            meta?.image,
+          ].filter(Boolean);
+          for (const c of candidates) {
+            if (typeof c === "string" && !PLACEHOLDER_IMG_RE.test(c)) return c;
+          }
+          // Pull first inline image from markdown that looks like a photo
+          if (markdown) {
+            const re = /!\[[^\]]*\]\((https?:\/\/[^)\s]+\.(?:jpe?g|png|webp)(?:\?[^)\s]*)?)\)/gi;
+            let m: RegExpExecArray | null;
+            while ((m = re.exec(markdown))) {
+              const url = m[1];
+              if (PLACEHOLDER_IMG_RE.test(url)) continue;
+              if (/sprite|icon|logo|avatar/i.test(url)) continue;
+              return url;
+            }
+          }
+          if (screenshot) return screenshot;
+          return null;
+        };
+
         for (const q of queries) {
           try {
             const res: any = await firecrawl.search(q, {
               limit: perQuery,
               scrapeOptions: {
-                formats: [{ type: "json", schema: ExtractSchema } as any],
+                formats: [
+                  "markdown",
+                  "screenshot",
+                  { type: "json", schema: ExtractSchema } as any,
+                ],
                 onlyMainContent: true,
               },
             } as any);
@@ -76,13 +109,9 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
               const j = item?.json ?? item?.extract ?? item?.data?.json;
               if (j && j.headline && j.business_type && j.region) {
                 const meta = item?.metadata ?? item?.data?.metadata ?? {};
-                const hero =
-                  meta.ogImage ||
-                  meta.og_image ||
-                  meta["og:image"] ||
-                  meta.twitterImage ||
-                  meta.image ||
-                  null;
+                const markdown = item?.markdown ?? item?.data?.markdown;
+                const screenshot = item?.screenshot ?? item?.data?.screenshot;
+                const hero = pickHero(meta, markdown, screenshot);
                 scraped.push({
                   ...j,
                   source_url: item.url ?? meta.sourceURL ?? meta.url ?? null,
