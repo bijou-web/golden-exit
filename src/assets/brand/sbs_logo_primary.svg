@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 140" role="img" aria-label="Sell Baby Sell logo">
+  <!-- THE CLOSING BELL — a hotel service bell that is also the closing bell you ring when the deal is done -->
+  <defs>
+    <linearGradient id="brass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D3A64A"/>
+      <stop offset="1" stop-color="#B98A2F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Bell mark -->
+  <g transform="translate(10,10)">
+    <!-- ding arcs (the deal closing) -->
+    <path d="M104 26 A54 54 0 0 1 116 44" fill="none" stroke="#B98A2F" stroke-width="5" stroke-linecap="round"/>
+    <path d="M112 12 A70 70 0 0 1 128 36" fill="none" stroke="#B98A2F" stroke-width="5" stroke-linecap="round" opacity="0.55"/>
+    <!-- knob -->
+    <circle cx="60" cy="28" r="9" fill="url(#brass)"/>
+    <rect x="56" y="34" width="8" height="10" rx="2" fill="url(#brass)"/>
+    <!-- dome -->
+    <path d="M18 92 A42 42 0 0 1 102 92 Z" fill="#0E2233"/>
+    <!-- highlight on dome -->
+    <path d="M34 66 A30 30 0 0 1 60 52" fill="none" stroke="#FCFBF8" stroke-width="4" stroke-linecap="round" opacity="0.35"/>
+    <!-- base plate -->
+    <rect x="8" y="96" width="104" height="12" rx="6" fill="url(#brass)"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g font-family="Fraunces, Georgia, 'Times New Roman', serif" fill="#0E2233">
+    <text x="170" y="82" font-size="52" font-weight="600" letter-spacing="2">SELL</text>
+    <text x="318" y="82" font-size="52" font-weight="600" letter-spacing="2" fill="#B98A2F" font-style="italic">BABY</text>
+    <text x="486" y="82" font-size="52" font-weight="600" letter-spacing="2">SELL</text>
+    <text x="172" y="112" font-family="'Spline Sans Mono', 'Courier New', monospace" font-size="15" letter-spacing="6" fill="#7A9086">THE EXIT RAIL FOR HOSPITALITY</text>
+  </g>
+</svg>

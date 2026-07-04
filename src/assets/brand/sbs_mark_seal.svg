@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Sell Baby Sell seal mark">
+  <defs>
+    <linearGradient id="brassS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D3A64A"/>
+      <stop offset="1" stop-color="#B98A2F"/>
+    </linearGradient>
+  </defs>
+  <!-- Wax-seal ring: matches the Deal Ticket readiness dial -->
+  <circle cx="100" cy="100" r="94" fill="#0E2233"/>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#B98A2F" stroke-width="3"/>
+  <circle cx="100" cy="100" r="78" fill="none" stroke="#B98A2F" stroke-width="1" opacity="0.6"/>
+  <!-- Bell -->
+  <g transform="translate(48,44) scale(0.9)">
+    <path d="M92 22 A48 48 0 0 1 103 38" fill="none" stroke="#D3A64A" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="58" cy="26" r="8" fill="url(#brassS)"/>
+    <rect x="54" y="32" width="8" height="9" rx="2" fill="url(#brassS)"/>
+    <path d="M20 84 A38 38 0 0 1 96 84 Z" fill="#FCFBF8"/>
+    <rect x="10" y="88" width="96" height="11" rx="5.5" fill="url(#brassS)"/>
+  </g>
+  <text x="100" y="164" text-anchor="middle" font-family="'Spline Sans Mono','Courier New',monospace" font-size="17" letter-spacing="7" fill="#FCFBF8">S B S</text>
+</svg>
