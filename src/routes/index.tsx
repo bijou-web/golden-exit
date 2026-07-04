@@ -82,27 +82,25 @@ function Index() {
       <section
         className="relative overflow-hidden brass-sheen border-b border-[var(--border)] bg-[var(--paper)]"
       >
-        {/* Full-bleed background photo */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroBg})` }}
-        />
-        {/* Readability wash — opaque behind the headline, fully clear on the right so the photo reads */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(90deg, rgba(247,243,235,0.94) 0%, rgba(247,243,235,0.82) 32%, rgba(247,243,235,0.40) 55%, rgba(247,243,235,0) 78%)",
-          }}
-        />
-        {/* Brass corner detail */}
-        <div
-          aria-hidden="true"
-          className="hidden md:block absolute bottom-8 left-8 w-24 h-24 border-l border-b z-[1] pointer-events-none"
-          style={{ borderColor: "color-mix(in oklab, var(--brass) 30%, transparent)" }}
-        />
+        {/* Background layers wrapper — single brass-sheen child so its `position: relative` reset
+            doesn't collapse the absolutely-positioned image/wash to 0×0. */}
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${heroBg})` }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(247,243,235,0.94) 0%, rgba(247,243,235,0.82) 32%, rgba(247,243,235,0.40) 55%, rgba(247,243,235,0) 78%)",
+            }}
+          />
+          <div
+            className="hidden md:block absolute bottom-8 left-8 w-24 h-24 border-l border-b"
+            style={{ borderColor: "color-mix(in oklab, var(--brass) 30%, transparent)" }}
+          />
+        </div>
         <div className="relative content-shell py-24 md:py-32 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
           <div className="reveal">
             <div className="eyebrow">The Baby Boomer exit rail for hospitality</div>
