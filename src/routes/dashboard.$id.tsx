@@ -57,7 +57,7 @@ function DashboardPage() {
             fix: g.fix ?? g.impact ?? "",
             impact: g.impact ?? "",
           })),
-          teaser: anyRow.teaser_paragraph ?? "",
+          teaser_paragraph: anyRow.teaser_paragraph ?? "",
           input: {
             business_type: inputMap[bt] ?? "vacation_rental",
             units: req.units ?? 0,
