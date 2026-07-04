@@ -17,6 +17,7 @@ import { Route as BuyersRouteImport } from './routes/buyers'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ListingIdRouteImport } from './routes/listing.$id'
 import { Route as DashboardIdRouteImport } from './routes/dashboard.$id'
+import { Route as ApiPublicScrapeListingsRouteImport } from './routes/api/public/scrape-listings'
 
 const ValuationRoute = ValuationRouteImport.update({
   id: '/valuation',
@@ -58,6 +59,11 @@ const DashboardIdRoute = DashboardIdRouteImport.update({
   path: '/dashboard/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicScrapeListingsRoute = ApiPublicScrapeListingsRouteImport.update({
+  id: '/api/public/scrape-listings',
+  path: '/api/public/scrape-listings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/valuation': typeof ValuationRoute
   '/dashboard/$id': typeof DashboardIdRoute
   '/listing/$id': typeof ListingIdRoute
+  '/api/public/scrape-listings': typeof ApiPublicScrapeListingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/valuation': typeof ValuationRoute
   '/dashboard/$id': typeof DashboardIdRoute
   '/listing/$id': typeof ListingIdRoute
+  '/api/public/scrape-listings': typeof ApiPublicScrapeListingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/valuation': typeof ValuationRoute
   '/dashboard/$id': typeof DashboardIdRoute
   '/listing/$id': typeof ListingIdRoute
+  '/api/public/scrape-listings': typeof ApiPublicScrapeListingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/valuation'
     | '/dashboard/$id'
     | '/listing/$id'
+    | '/api/public/scrape-listings'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/valuation'
     | '/dashboard/$id'
     | '/listing/$id'
+    | '/api/public/scrape-listings'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/valuation'
     | '/dashboard/$id'
     | '/listing/$id'
+    | '/api/public/scrape-listings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   ValuationRoute: typeof ValuationRoute
   DashboardIdRoute: typeof DashboardIdRoute
   ListingIdRoute: typeof ListingIdRoute
+  ApiPublicScrapeListingsRoute: typeof ApiPublicScrapeListingsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -192,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/scrape-listings': {
+      id: '/api/public/scrape-listings'
+      path: '/api/public/scrape-listings'
+      fullPath: '/api/public/scrape-listings'
+      preLoaderRoute: typeof ApiPublicScrapeListingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -204,17 +224,8 @@ const rootRouteChildren: RootRouteChildren = {
   ValuationRoute: ValuationRoute,
   DashboardIdRoute: DashboardIdRoute,
   ListingIdRoute: ListingIdRoute,
+  ApiPublicScrapeListingsRoute: ApiPublicScrapeListingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
