@@ -196,6 +196,7 @@ export interface Listing {
   subscores: Subscores;
   teaser: string;
   headline: string;
+  hero_image_url?: string | null;
 }
 
 export const SEED_LISTINGS: Listing[] = [
@@ -217,6 +218,7 @@ export const SEED_LISTINGS: Listing[] = [
     subscores: { financial_records: 88, revenue_trend: 82, review_health: 92, owner_dependency: 78, channel_mix: 80 },
     teaser: "A twelve-unit short-term rental portfolio spread across three curated Sedona neighborhoods, generating $1.52M in trailing gross revenue at 74% occupancy. Established in 2016, the business runs on a full property-management stack (Guesty + PriceLabs) with 42% of revenue booked direct through a proprietary site. Owner spends ~8 hrs/wk on oversight; a two-person local ops team handles turnovers and guest comms. Financials available in the deal room.",
     headline: "12-unit vacation rental portfolio · Sedona, AZ",
+    hero_image_url: null,
   },
   {
     id: "napa-boutique",
@@ -236,6 +238,7 @@ export const SEED_LISTINGS: Listing[] = [
     subscores: { financial_records: 95, revenue_trend: 78, review_health: 96, owner_dependency: 92, channel_mix: 90 },
     teaser: "Fourteen-key boutique property on a working vineyard adjacent to St. Helena, operating year-round with a strong shoulder-season food & beverage program. Full GM in place; owner absentee. 58% direct bookings, 4.9★ across 1,200+ reviews.",
     headline: "Boutique hotel · 14 keys · Napa Valley, CA",
+    hero_image_url: null,
   },
   {
     id: "asheville-inn",
@@ -255,6 +258,7 @@ export const SEED_LISTINGS: Listing[] = [
     subscores: { financial_records: 74, revenue_trend: 68, review_health: 88, owner_dependency: 55, channel_mix: 88 },
     teaser: "Eight-room historic inn walkable to downtown Asheville. Owner-operated for 11 years — SOP transfer plan documented. Real estate included in asking range.",
     headline: "Historic inn · 8 rooms · Asheville, NC",
+    hero_image_url: null,
   },
   {
     id: "gulf-portfolio",
@@ -274,6 +278,7 @@ export const SEED_LISTINGS: Listing[] = [
     subscores: { financial_records: 82, revenue_trend: 84, review_health: 78, owner_dependency: 72, channel_mix: 76 },
     teaser: "Twenty-six-unit vacation-rental management business along Florida's 30A corridor. Mix of owned and managed units with a proven acquisition playbook.",
     headline: "26-unit VR portfolio · 30A, FL",
+    hero_image_url: null,
   },
   {
     id: "hudson-hotel",
@@ -293,6 +298,7 @@ export const SEED_LISTINGS: Listing[] = [
     subscores: { financial_records: 90, revenue_trend: 76, review_health: 88, owner_dependency: 88, channel_mix: 86 },
     teaser: "Thirty-two-room independent hotel with an on-site restaurant, meeting space, and a strong wedding pipeline. Full management team stays with sale.",
     headline: "Independent hotel · 32 keys · Hudson Valley, NY",
+    hero_image_url: null,
   },
   {
     id: "joshua-tree",
@@ -312,6 +318,7 @@ export const SEED_LISTINGS: Listing[] = [
     subscores: { financial_records: 62, revenue_trend: 70, review_health: 78, owner_dependency: 60, channel_mix: 55 },
     teaser: "Six architectural desert rentals, Instagram-forward, high margin on peak weekends. Owner willing to stay 6 months post-close for handover.",
     headline: "6-unit design vacation rentals · Joshua Tree, CA",
+    hero_image_url: null,
   },
 ];
 

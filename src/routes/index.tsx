@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { SiteShell } from "@/components/sbs/SiteShell";
 import { DealTicket } from "@/components/sbs/DealTicket";
 import { SEED_LISTINGS } from "@/lib/sbs-data";
+import { listingDisplayImage } from "@/lib/listing-images";
 import { supabase } from "@/integrations/supabase/client";
 import heroBg from "@/assets/hero-inn.jpg";
 
@@ -38,7 +39,7 @@ function Index() {
     methodology: l.methodology,
     revenue_band: l.revenue_band,
     days_listed: l.days_listed,
-    hero_image_url: null,
+    hero_image_url: listingDisplayImage(l),
   }));
   const [featured, setFeatured] = useState<Featured[]>(seedFeatured);
 
@@ -48,7 +49,6 @@ function Index() {
         .from("listings")
         .select("id, headline, region, asking_low, asking_high, readiness_score, verified, created_at, hero_image_url")
         .eq("status", "live")
-        .not("hero_image_url", "is", null)
         .order("created_at", { ascending: false })
         .limit(3);
       if (!data || data.length === 0) return;
@@ -66,7 +66,11 @@ function Index() {
           methodology: "Scraped listing",
           revenue_band: "$—",
           days_listed: Math.max(1, Math.floor((Date.now() - new Date(l.created_at).getTime()) / dayMs)),
-          hero_image_url: l.hero_image_url,
+          hero_image_url: listingDisplayImage({
+            region: l.region,
+            headline: l.headline,
+            hero_image_url: l.hero_image_url,
+          }),
         })),
       );
     })();
@@ -285,6 +289,8 @@ function Index() {
                       src={l.hero_image_url}
                       alt={l.headline}
                       loading="lazy"
+                      width={1280}
+                      height={800}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                       onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                     />

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { SiteShell } from "@/components/sbs/SiteShell";
 import { DealTicket } from "@/components/sbs/DealTicket";
 import { SEED_LISTINGS, type BusinessType, shortTypeLabel } from "@/lib/sbs-data";
+import { listingDisplayImage } from "@/lib/listing-images";
 import { supabase } from "@/integrations/supabase/client";
 
 type DbListing = {
@@ -84,7 +85,12 @@ function MarketplacePage() {
           methodology: "Verified booking data",
           revenue_band: "$—",
           days_listed: days,
-          hero_image_url: l.hero_image_url,
+          hero_image_url: listingDisplayImage({
+            business_type: DB_TO_TYPE[l.business_type] ?? l.business_type,
+            region: l.region,
+            headline: l.headline,
+            hero_image_url: l.hero_image_url,
+          }),
         };
       });
       setDbRows(mapped);
@@ -107,6 +113,7 @@ function MarketplacePage() {
         methodology: l.methodology,
         revenue_band: l.revenue_band,
         days_listed: l.days_listed,
+        hero_image_url: listingDisplayImage(l),
       }));
 
   const filtered = source
@@ -157,6 +164,8 @@ function MarketplacePage() {
                     src={l.hero_image_url}
                     alt={l.headline}
                     loading="lazy"
+                    width={1280}
+                    height={800}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                   />

@@ -63,8 +63,8 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
         const errors: string[] = [];
 
         const PLACEHOLDER_IMG_RE =
-          /(facebookDefaultImage|default[-_]?(og|share|image)|placeholder|logo\.(png|svg|jpg))/i;
-        const pickHero = (meta: any, markdown: string | undefined, _screenshot: string | undefined) => {
+          /(facebookDefaultImage|default[-_]?(og|share|image)|placeholder|logo\.(png|svg|jpg)|firecrawl-scrape-media\/screenshot-|screenshot[-_][a-z0-9-]+\.(?:png|jpe?g|webp)|\/screenshots?\/)/i;
+        const pickHero = (meta: any, markdown: string | undefined) => {
           // NEVER use Firecrawl's full-page screenshot as the hero — it's the
           // entire scrolling page, not a single property photo. Prefer the
           // page's og:image, then the first real inline photo from markdown.
@@ -113,7 +113,6 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
               scrapeOptions: {
                 formats: [
                   "markdown",
-                  "screenshot",
                   { type: "json", schema: ExtractSchema } as any,
                 ],
                 onlyMainContent: true,
@@ -125,10 +124,9 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
               if (j && j.headline && j.business_type && j.region) {
                 const meta = item?.metadata ?? item?.data?.metadata ?? {};
                 const markdown = item?.markdown ?? item?.data?.markdown;
-                const screenshot = item?.screenshot ?? item?.data?.screenshot;
                 const url = item.url ?? meta.sourceURL ?? meta.url ?? null;
                 if (!isDetailUrl(url)) continue; // skip category/search pages
-                const hero = pickHero(meta, markdown, screenshot);
+                const hero = pickHero(meta, markdown);
                 scraped.push({
                   ...j,
                   source_url: url,
