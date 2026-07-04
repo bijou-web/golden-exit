@@ -175,6 +175,17 @@ function Index() {
           <div className="grid gap-6 md:grid-cols-3">
             {featured.map((l) => (
               <Link key={l.id} to="/listing/$id" params={{ id: l.id }} className="block group">
+                {l.hero_image_url ? (
+                  <div className="aspect-[16/10] w-full overflow-hidden border border-[var(--border)] border-b-0 bg-[var(--sand)]">
+                    <img
+                      src={l.hero_image_url}
+                      alt={l.headline}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                    />
+                  </div>
+                ) : null}
                 <DealTicket
                   compact
                   verified={l.verified}
@@ -184,7 +195,7 @@ function Index() {
                   methodology={l.methodology}
                   readiness={l.readiness}
                   headline={l.headline}
-                  subhead={`${l.revenue_band} revenue · ${l.days_listed}d listed`}
+                  subhead={`${l.region} · ${l.days_listed}d listed`}
                 />
               </Link>
             ))}
