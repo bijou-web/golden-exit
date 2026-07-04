@@ -82,9 +82,11 @@ function Index() {
       <section
         className="relative overflow-hidden brass-sheen border-b border-[var(--border)] bg-[var(--paper)]"
       >
-        {/* Background layers wrapper — single brass-sheen child so its `position: relative` reset
-            doesn't collapse the absolutely-positioned image/wash to 0×0. */}
-        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+        {/* Background layers wrapper — inline position:absolute beats brass-sheen's `> * { position: relative }` reset. */}
+        <div
+          aria-hidden="true"
+          style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+        >
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${heroBg})` }}
