@@ -76,16 +76,21 @@ function Index() {
     <SiteShell>
       {/* HERO */}
       <section
-        className="relative brass-sheen border-b border-[var(--border)] bg-[var(--paper)] bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroBg})` }}
+        className="relative brass-sheen border-b border-[var(--border)] bg-[var(--paper)]"
       >
-        {/* Readability wash — warm paper on the left, softer on the right */}
+        {/* Background photo — muted, right-anchored so text side stays clean */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-cover bg-center opacity-40"
+          style={{ backgroundImage: `url(${heroBg})`, backgroundPosition: "right center" }}
+        />
+        {/* Readability wash — solid paper on the left, transparent on the right */}
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(90deg, rgba(247,243,235,0.96) 0%, rgba(247,243,235,0.86) 42%, rgba(247,243,235,0.35) 72%, rgba(247,243,235,0.15) 100%)",
+              "linear-gradient(90deg, rgba(247,243,235,1) 0%, rgba(247,243,235,1) 38%, rgba(247,243,235,0.82) 58%, rgba(247,243,235,0.55) 82%, rgba(247,243,235,0.35) 100%)",
           }}
         />
         <div className="relative content-shell py-24 md:py-32 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
