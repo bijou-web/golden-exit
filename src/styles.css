@@ -152,6 +152,29 @@
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  /* 55+ eyes: never let body copy fall below 16px except legal footer. */
+  p, li { font-size: 1.125rem; line-height: 1.7; color: var(--ink); }
+
+  /* Boomer link rule: color alone is never a link. Always underline in prose. */
+  main a:not(.no-underline):not([class*="btn-"]):not([class*="eyebrow"]) {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: color-mix(in oklab, var(--brass) 60%, transparent);
+  }
+  main a:not(.no-underline):not([class*="btn-"]):hover {
+    text-decoration-color: var(--brass);
+  }
+
+  /* Universal keyboard focus — 2px brass outline everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 
   h1, h2, h3, .font-display {
@@ -159,6 +182,7 @@
     font-optical-sizing: auto;
     letter-spacing: -0.01em;
   }
+  h1 { letter-spacing: -0.02em; }
 }
 
 @utility font-mono-num {
@@ -184,15 +208,33 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   background: var(--ink);
   color: var(--paper);
-  padding: 0.75rem 1.5rem;
-  font-weight: 500;
-  font-size: 0.875rem;
+  padding: 0 1.75rem;
+  min-height: 52px;
+  font-weight: 600;
+  font-size: 1.125rem;
   letter-spacing: 0.01em;
-  border-radius: 4px;
-  transition: background 0.15s ease;
-  &:hover { background: #1a3550; }
+  border-radius: 8px;
+  transition: transform 150ms ease-out, background 150ms ease-out, box-shadow 150ms ease-out;
+  min-width: 44px;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 1.75rem; right: 1.75rem; bottom: 12px;
+    height: 2px;
+    background: var(--brass);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 150ms ease-out;
+  }
+  &:hover {
+    background: #1a3550;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px -8px rgba(14, 34, 51, 0.35);
+  }
+  &:hover::after { transform: scaleX(1); }
 }
 
 @utility btn-outline-ink {
@@ -201,13 +243,15 @@
   justify-content: center;
   border: 1px solid var(--ink);
   color: var(--ink);
-  padding: 0.75rem 1.5rem;
-  font-weight: 500;
-  font-size: 0.875rem;
+  padding: 0 1.75rem;
+  min-height: 52px;
+  font-weight: 600;
+  font-size: 1.125rem;
   letter-spacing: 0.01em;
-  border-radius: 4px;
-  transition: background 0.15s ease;
-  &:hover { background: var(--sand); }
+  border-radius: 8px;
+  transition: background 150ms ease-out, transform 150ms ease-out;
+  min-width: 44px;
+  &:hover { background: var(--sand); transform: translateY(-2px); }
 }
 
 @keyframes sbs-reveal {
@@ -218,3 +262,85 @@
 @utility reveal {
   animation: sbs-reveal 0.7s ease-out both;
 }
+
+/* Section rhythm: alternating paper/sand, 120/64px vertical, 1120 max, ledger rule. */
+@utility section-band {
+  padding-top: 120px;
+  padding-bottom: 120px;
+  border-bottom: 1px solid color-mix(in oklab, var(--sage) 30%, transparent);
+}
+@media (max-width: 768px) {
+  .section-band { padding-top: 64px; padding-bottom: 64px; }
+}
+@utility section-sand { background: var(--sand); }
+@utility ledger-rule {
+  height: 1px;
+  background: color-mix(in oklab, var(--sage) 30%, transparent);
+  border: 0;
+}
+@utility content-shell {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+@utility measure {
+  max-width: 68ch;
+}
+
+/* Signature brass sheen — hero + closing band only. */
+@utility brass-sheen {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.brass-sheen::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(12deg, rgba(185, 138, 47, 0) 30%, rgba(185, 138, 47, 0.05) 50%, rgba(185, 138, 47, 0) 70%),
+    repeating-linear-gradient(0deg, rgba(252, 251, 248, 0.02) 0 1px, transparent 1px 6px);
+  pointer-events: none;
+  z-index: 0;
+}
+.brass-sheen > * { position: relative; z-index: 1; }
+
+/* Count-up: nothing fancy in CSS; JS drives it. */
+@keyframes sbs-countup-flash {
+  0% { color: var(--brass); }
+  100% { color: var(--brass); }
+}
+
+/* Bell ding — plays exactly once when class is applied. */
+@keyframes sbs-bell-ding {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(-14deg); }
+  45%  { transform: rotate(10deg); }
+  70%  { transform: rotate(-4deg); }
+  100% { transform: rotate(0deg); }
+}
+@utility bell-ding {
+  transform-origin: 50% 15%;
+  animation: sbs-bell-ding 400ms ease-out 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .bell-ding { animation: none !important; }
+}
+
+/* Print: clean certificate for the "Print my valuation" button. */
+@media print {
+  body { background: #fff; color: #000; }
+  header, footer, nav, button, .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  .printable-ticket {
+    box-shadow: none !important;
+    border: 1.5px solid #000 !important;
+    background: #fff !important;
+    color: #000 !important;
+    padding: 32px !important;
+  }
+  .printable-ticket * { color: #000 !important; }
+}
+.print-only { display: none; }
