@@ -64,12 +64,10 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
 
         const PLACEHOLDER_IMG_RE =
           /(facebookDefaultImage|default[-_]?(og|share|image)|placeholder|logo\.(png|svg|jpg))/i;
-        const pickHero = (meta: any, markdown: string | undefined, screenshot: string | undefined) => {
-          // Prefer Firecrawl's own screenshot URL — source sites (BizBuySell,
-          // BusinessesForSale) hotlink-block their CDN images with Akamai, so
-          // metadata og:image URLs return 403 in the browser. Firecrawl-hosted
-          // screenshots are always hotlinkable.
-          if (typeof screenshot === "string" && /^https?:\/\//.test(screenshot)) return screenshot;
+        const pickHero = (meta: any, markdown: string | undefined, _screenshot: string | undefined) => {
+          // NEVER use Firecrawl's full-page screenshot as the hero — it's the
+          // entire scrolling page, not a single property photo. Prefer the
+          // page's og:image, then the first real inline photo from markdown.
           const candidates: string[] = [
             meta?.ogImage,
             meta?.og_image,
@@ -81,8 +79,6 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
           for (const c of candidates) {
             if (typeof c !== "string") continue;
             if (PLACEHOLDER_IMG_RE.test(c)) continue;
-            // Skip known hotlink-blocked CDNs
-            if (/images\.bizbuysell\.com|businessesforsale\.com/i.test(c)) continue;
             return c;
           }
           // Pull first inline image from markdown that looks like a photo
@@ -93,11 +89,21 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
               const url = m[1];
               if (PLACEHOLDER_IMG_RE.test(url)) continue;
               if (/sprite|icon|logo|avatar/i.test(url)) continue;
-              if (/images\.bizbuysell\.com|businessesforsale\.com/i.test(url)) continue;
               return url;
             }
           }
           return null;
+        };
+
+        // Only accept URLs that look like an individual listing detail page —
+        // not category/search pages like "/bed-and-breakfasts-for-sale/".
+        const isDetailUrl = (url: string | null | undefined): boolean => {
+          if (!url) return false;
+          // BizBuySell listing detail: /Business-Opportunity/.../<digits>/
+          if (/bizbuysell\.com\/.+\/\d{5,}\/?$/i.test(url)) return true;
+          // BusinessesForSale detail: /.../businesses-for-sale/.../<digits>.aspx or /<digits>/
+          if (/businessesforsale\.com\/.+\/(\d{5,})(?:\.aspx|\/?)$/i.test(url)) return true;
+          return false;
         };
 
         for (const q of queries) {
@@ -120,10 +126,12 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
                 const meta = item?.metadata ?? item?.data?.metadata ?? {};
                 const markdown = item?.markdown ?? item?.data?.markdown;
                 const screenshot = item?.screenshot ?? item?.data?.screenshot;
+                const url = item.url ?? meta.sourceURL ?? meta.url ?? null;
+                if (!isDetailUrl(url)) continue; // skip category/search pages
                 const hero = pickHero(meta, markdown, screenshot);
                 scraped.push({
                   ...j,
-                  source_url: item.url ?? meta.sourceURL ?? meta.url ?? null,
+                  source_url: url,
                   hero_image_url: hero,
                 });
               }
