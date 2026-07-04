@@ -82,11 +82,12 @@ function Index() {
       <section
         className="relative overflow-hidden brass-sheen border-b border-[var(--border)] bg-[var(--paper)]"
       >
-        {/* Background photo — prominent, right-anchored so the property is clearly visible */}
-        <div
+        {/* Background photo — rendered as an image so it reliably appears in preview and production */}
+        <img
+          src={heroBg}
+          alt=""
           aria-hidden="true"
-          className="absolute inset-y-0 right-0 w-full md:w-[72%] bg-cover bg-center md:bg-right"
-          style={{ backgroundImage: `url(${heroBg})`, opacity: 1 }}
+          className="absolute inset-0 h-full w-full object-cover object-[68%_center]"
         />
         {/* Readability wash — protects the headline without hiding the image */}
         <div
@@ -94,7 +95,7 @@ function Index() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(90deg, rgba(247,243,235,0.94) 0%, rgba(247,243,235,0.84) 34%, rgba(247,243,235,0.22) 57%, rgba(247,243,235,0) 76%)",
+              "linear-gradient(90deg, rgba(247,243,235,0.9) 0%, rgba(247,243,235,0.76) 34%, rgba(247,243,235,0.18) 58%, rgba(247,243,235,0) 78%)",
           }}
         />
         <div className="relative content-shell py-24 md:py-32 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
