@@ -1,0 +1,2 @@
+UPDATE public.listings SET hero_image_url = NULL WHERE hero_image_url ILIKE '%facebookDefaultImage%' OR hero_image_url ILIKE '%placeholder%';
+DELETE FROM public.listings WHERE owner_id IS NULL AND verified = false;
