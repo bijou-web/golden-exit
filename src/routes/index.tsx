@@ -76,21 +76,21 @@ function Index() {
     <SiteShell>
       {/* HERO */}
       <section
-        className="relative brass-sheen border-b border-[var(--border)] bg-[var(--paper)]"
+        className="relative overflow-hidden brass-sheen border-b border-[var(--border)] bg-[var(--paper)]"
       >
-        {/* Background photo — muted, right-anchored so text side stays clean */}
+        {/* Background photo — prominent, right-anchored so the property is clearly visible */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-cover"
-          style={{ backgroundImage: `url(${heroBg})`, backgroundPosition: "right center", opacity: 0.85 }}
+          className="absolute inset-y-0 right-0 w-full md:w-[72%] bg-cover bg-center md:bg-right"
+          style={{ backgroundImage: `url(${heroBg})`, opacity: 1 }}
         />
-        {/* Readability wash — solid paper on the left, transparent on the right */}
+        {/* Readability wash — protects the headline without hiding the image */}
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(90deg, rgba(247,243,235,0.98) 0%, rgba(247,243,235,0.92) 30%, rgba(247,243,235,0.55) 55%, rgba(247,243,235,0.2) 80%, rgba(247,243,235,0.05) 100%)",
+              "linear-gradient(90deg, rgba(247,243,235,0.94) 0%, rgba(247,243,235,0.84) 34%, rgba(247,243,235,0.22) 57%, rgba(247,243,235,0) 76%)",
           }}
         />
         <div className="relative content-shell py-24 md:py-32 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
