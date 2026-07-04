@@ -127,6 +127,19 @@ function Index() {
         </div>
       </section>
 
+      {/* PULL QUOTE — the stakes, in one voice */}
+      <section className="bg-[var(--paper)] border-b border-[var(--border)]">
+        <div className="content-shell py-20 md:py-24 max-w-4xl">
+          <div className="eyebrow">The stakes</div>
+          <blockquote className="mt-6 font-display text-3xl md:text-5xl text-ink leading-[1.15]">
+            "This is actually the largest wealth transfer in history."
+          </blockquote>
+          <div className="mt-6 text-sm text-[var(--sage)] tracking-wide">
+            — Anne-Claire Broughton, NC Employee Ownership Center · <span className="italic">WNC Business</span>
+          </div>
+        </div>
+      </section>
+
       {/* HOW IT WORKS */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="eyebrow text-center">How it works</div>
@@ -161,6 +174,79 @@ function Index() {
       </section>
 
       {/* MARKETPLACE PREVIEW */}
+      {/* VOICES — what industry leaders are saying about the boomer exit */}
+      <section className="bg-ink text-[var(--paper)]">
+        <div className="content-shell py-24 md:py-28">
+          <div className="eyebrow" style={{ color: "var(--brass)" }}>What they're saying</div>
+          <h2 className="mt-3 font-display text-4xl md:text-5xl text-[var(--paper)] max-w-3xl leading-tight">
+            The silver tsunami isn't a metaphor. It's a deadline.
+          </h2>
+          <div className="mt-14 grid gap-6 md:grid-cols-2">
+            {[
+              {
+                q: "Main Street faces a mass extinction event.",
+                who: "Joe Lonsdale",
+                role: "Co-founder, Palantir & 8VC",
+                src: "blog.joelonsdale.com",
+              },
+              {
+                q: "Despite being closest to exit, many owners — especially baby boomers — are the least prepared.",
+                who: "Scott Snider",
+                role: "via McKinsey, The Great Ownership Transfer",
+                src: "mckinsey.com, 2026",
+              },
+              {
+                q: "Many viable small businesses may close rather than transfer ownership.",
+                who: "McKinsey Institute for Economic Mobility",
+                role: "",
+                src: "mckinsey.com",
+              },
+              {
+                q: "48% of Boomers want out in three years.",
+                who: "Cornerstone 2025 National Study",
+                role: "",
+                src: "The Business News",
+              },
+              {
+                q: "There are places in this country that will be wiped out.",
+                who: "Tony Guidotti",
+                role: "Harvard Business School Ownership Project",
+                src: "hbs.edu/bigs",
+              },
+              {
+                q: "They waited too long to sell, and by then, revenues were down.",
+                who: "Erick Marenco",
+                role: "Business broker, Suncoast Business Consultants",
+                src: "FIU Business Magazine",
+              },
+            ].map((q) => (
+              <figure
+                key={q.who + q.q.slice(0, 20)}
+                className="border-l-2 border-[var(--brass)] pl-6 py-2"
+              >
+                <blockquote className="font-display text-xl md:text-2xl text-[var(--paper)] leading-snug m-0">
+                  "{q.q}"
+                </blockquote>
+                <figcaption className="mt-4 text-sm text-[var(--paper)]/70">
+                  <span className="text-[var(--paper)] font-semibold">{q.who}</span>
+                  {q.role ? <span> · {q.role}</span> : null}
+                  <span className="block text-xs text-[var(--paper)]/50 mt-1 italic">{q.src}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="mt-16 pt-10 border-t border-[var(--paper)]/20 max-w-3xl">
+            <div className="font-mono-num text-xs text-[var(--brass)] tracking-widest">
+              THE NUMBER
+            </div>
+            <p className="mt-4 font-display text-2xl md:text-3xl text-[var(--paper)] leading-snug">
+              "Roughly 10,000 baby boomers reach retirement age every day — $10 trillion in business assets must change hands."
+            </p>
+            <div className="mt-4 text-sm text-[var(--paper)]/60 italic">— ButcherJoseph M&amp;A · butcherjoseph.com</div>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-[var(--sand)]/50 border-y border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-6 py-24">
           <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
