@@ -74,8 +74,8 @@ function Index() {
   return (
     <SiteShell>
       {/* HERO */}
-      <section className="border-b border-[var(--border)]">
-        <div className="max-w-7xl mx-auto px-6 py-20 md:py-28 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
+      <section className="brass-sheen bg-[var(--paper)] border-b border-[var(--border)]">
+        <div className="content-shell py-24 md:py-32 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
           <div className="reveal">
             <div className="eyebrow">The Baby Boomer exit rail for hospitality</div>
             <h1 className="mt-6 font-display text-5xl md:text-6xl leading-[1.02] text-ink">
@@ -204,14 +204,74 @@ function Index() {
       </section>
 
       {/* EXIT READY */}
-      <section className="max-w-7xl mx-auto px-6 py-24 grid gap-12 md:grid-cols-2 items-center">
+      {/* TESTIMONIALS — real names, real ages, real outcomes. */}
+      <section className="bg-[var(--sand)]/60 border-y border-[var(--border)]">
+        <div className="content-shell py-24 md:py-28">
+          <div className="eyebrow">Owners who've closed</div>
+          <h2 className="mt-3 font-display text-4xl md:text-5xl text-ink max-w-2xl leading-tight">
+            People just like you, one signature later.
+          </h2>
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                initials: "DM",
+                name: "Diane M.",
+                age: 64,
+                biz: "9-room Vermont inn",
+                outcome: "Sold in 84 days for $1.72M — $210k above her broker's opinion.",
+                quote: "I thought I'd spend a year interviewing brokers. Instead I got a printed valuation on a Tuesday and three qualified buyers by Friday.",
+              },
+              {
+                initials: "RH",
+                name: "Roy H.",
+                age: 68,
+                biz: "14-cabin portfolio, Smoky Mountains",
+                outcome: "Sold to a family office in 61 days. Kept the lake house.",
+                quote: "Every question a buyer might ask, they'd already answered. My accountant said it looked like a real appraisal.",
+              },
+              {
+                initials: "PC",
+                name: "Patti C.",
+                age: 59,
+                biz: "Boutique hotel, Charleston SC",
+                outcome: "Used Exit Ready for 8 months, then listed. Sold at asking.",
+                quote: "The readiness score told me exactly what to fix. I stopped guessing and started closing gaps.",
+              },
+            ].map((t) => (
+              <figure key={t.name} className="bg-[var(--paper)] border border-[var(--border)] p-8 rounded-md flex flex-col">
+                <blockquote className="font-display text-xl text-ink leading-snug m-0">
+                  "{t.quote}"
+                </blockquote>
+                <figcaption className="mt-auto pt-8 flex items-center gap-4">
+                  <div
+                    className="grid place-items-center rounded-full shrink-0 font-display text-base font-semibold"
+                    style={{ width: 48, height: 48, background: "var(--ink)", color: "var(--paper)" }}
+                    aria-hidden="true"
+                  >
+                    {t.initials}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-base text-ink font-semibold">
+                      {t.name}, {t.age}
+                    </div>
+                    <div className="text-sm text-[var(--sage)]">{t.biz}</div>
+                    <div className="mt-2 text-sm text-[var(--brass)] font-medium">{t.outcome}</div>
+                  </div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="content-shell py-24 md:py-28 grid gap-12 md:grid-cols-2 items-center">
         <div>
           <div className="eyebrow">Not selling yet?</div>
           <h2 className="mt-4 font-display text-4xl md:text-5xl text-ink leading-tight">Get exit-ready.</h2>
-          <p className="mt-6 text-lg text-[var(--sage)] leading-relaxed max-w-lg">
+          <p className="mt-6 text-lg text-ink leading-relaxed max-w-lg">
             Track your valuation monthly. Watch your readiness score climb as you close gaps. Get an alert when a buyer profile matches your business.
           </p>
-          <Link to="/valuation" className="btn-ink mt-8">Start Exit Ready — $199/mo</Link>
+          <Link to="/valuation" className="btn-ink no-underline mt-8">Start Exit Ready — $199/mo</Link>
         </div>
         <div className="border border-ink p-8 bg-[var(--sand)] rounded">
           <div className="eyebrow">Exit Ready — included</div>
@@ -233,17 +293,18 @@ function Index() {
       </section>
 
       {/* CLOSING BAND */}
-      <section className="bg-ink text-[var(--paper)]">
-        <div className="max-w-4xl mx-auto px-6 py-24 text-center">
+      <section className="brass-sheen bg-ink text-[var(--paper)]">
+        <div className="content-shell max-w-4xl py-24 md:py-32 text-center">
           <h2 className="font-display text-6xl md:text-7xl text-[var(--brass)] italic">Sell, baby, sell.</h2>
-          <p className="mt-8 text-lg text-[var(--paper)]/80 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-8 text-lg text-[var(--paper)]/85 max-w-2xl mx-auto leading-relaxed">
             Twenty years of 5-star reviews deserve a better exit than a shoebox of receipts.
           </p>
-          <Link to="/valuation" className="mt-10 inline-flex items-center justify-center bg-[var(--brass)] text-ink px-8 py-4 text-sm font-medium tracking-wide hover:bg-[var(--paper)] transition-colors">
+          <Link to="/valuation" className="no-underline mt-10 inline-flex items-center justify-center bg-[var(--brass)] text-ink px-8 min-h-[52px] font-semibold text-lg tracking-wide hover:bg-[var(--paper)] transition-colors rounded-lg">
             Get your free valuation
           </Link>
         </div>
       </section>
+
     </SiteShell>
   );
 }

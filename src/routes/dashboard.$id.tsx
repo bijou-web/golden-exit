@@ -134,6 +134,7 @@ function DashboardPage() {
             high={v.high}
             methodology={v.methodology}
             readiness={v.readiness_score}
+            printable
           />
         </div>
 
