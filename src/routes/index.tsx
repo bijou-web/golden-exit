@@ -88,14 +88,20 @@ function Index() {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroBg})` }}
         />
-        {/* Readability wash — darker on the left where the headline sits */}
+        {/* Readability wash — opaque behind the headline, fully clear on the right so the photo reads */}
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(90deg, rgba(247,243,235,0.92) 0%, rgba(247,243,235,0.78) 38%, rgba(247,243,235,0.35) 65%, rgba(247,243,235,0.15) 100%)",
+              "linear-gradient(90deg, rgba(247,243,235,0.94) 0%, rgba(247,243,235,0.82) 32%, rgba(247,243,235,0.40) 55%, rgba(247,243,235,0) 78%)",
           }}
+        />
+        {/* Brass corner detail */}
+        <div
+          aria-hidden="true"
+          className="hidden md:block absolute bottom-8 left-8 w-24 h-24 border-l border-b z-[1] pointer-events-none"
+          style={{ borderColor: "color-mix(in oklab, var(--brass) 30%, transparent)" }}
         />
         <div className="relative content-shell py-24 md:py-32 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
           <div className="reveal">
