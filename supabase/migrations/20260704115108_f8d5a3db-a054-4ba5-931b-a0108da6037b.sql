@@ -1,0 +1,1 @@
+UPDATE public.listings SET status = 'withdrawn', hero_image_url = NULL WHERE source_url ILIKE '%bizbuysell.com%';
