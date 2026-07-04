@@ -16,6 +16,7 @@ type DbListing = {
   readiness_score: number | null;
   verified: boolean | null;
   created_at: string;
+  hero_image_url: string | null;
 };
 
 const DB_TO_TYPE: Record<string, BusinessType> = {
@@ -39,6 +40,7 @@ type ListingRow = {
   methodology: string;
   revenue_band: string;
   days_listed: number;
+  hero_image_url?: string | null;
 };
 
 export const Route = createFileRoute("/marketplace")({
@@ -61,7 +63,7 @@ function MarketplacePage() {
     (async () => {
       const { data } = await supabase
         .from("listings")
-        .select("id, business_type, units, region, headline, asking_low, asking_high, readiness_score, verified, created_at")
+        .select("id, business_type, units, region, headline, asking_low, asking_high, readiness_score, verified, created_at, hero_image_url")
         .eq("status", "live")
         .order("created_at", { ascending: false });
       if (!data) return;
@@ -82,6 +84,7 @@ function MarketplacePage() {
           methodology: "Verified booking data",
           revenue_band: "$—",
           days_listed: days,
+          hero_image_url: l.hero_image_url,
         };
       });
       setDbRows(mapped);
@@ -147,7 +150,18 @@ function MarketplacePage() {
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filtered.map((l) => (
-            <Link key={l.id} to="/listing/$id" params={{ id: l.id }} className="block">
+            <Link key={l.id} to="/listing/$id" params={{ id: l.id }} className="block group">
+              {l.hero_image_url ? (
+                <div className="aspect-[16/10] w-full overflow-hidden border border-[var(--border)] border-b-0 bg-[var(--sand)]">
+                  <img
+                    src={l.hero_image_url}
+                    alt={l.headline}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                  />
+                </div>
+              ) : null}
               <DealTicket
                 compact
                 verified={l.verified}

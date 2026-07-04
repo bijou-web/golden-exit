@@ -75,7 +75,19 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
             for (const item of items) {
               const j = item?.json ?? item?.extract ?? item?.data?.json;
               if (j && j.headline && j.business_type && j.region) {
-                scraped.push({ ...j, source_url: item.url ?? item.metadata?.sourceURL ?? null });
+                const meta = item?.metadata ?? item?.data?.metadata ?? {};
+                const hero =
+                  meta.ogImage ||
+                  meta.og_image ||
+                  meta["og:image"] ||
+                  meta.twitterImage ||
+                  meta.image ||
+                  null;
+                scraped.push({
+                  ...j,
+                  source_url: item.url ?? meta.sourceURL ?? meta.url ?? null,
+                  hero_image_url: hero,
+                });
               }
             }
           } catch (err: any) {
@@ -104,6 +116,8 @@ export const Route = createFileRoute("/api/public/scrape-listings")({
           sde: s.sde ?? null,
           verified: false,
           teaser_paragraph: s.teaser_paragraph,
+          hero_image_url: s.hero_image_url ?? null,
+          source_url: s.source_url ?? null,
         }));
 
         const { data: inserted, error } = await supabaseAdmin

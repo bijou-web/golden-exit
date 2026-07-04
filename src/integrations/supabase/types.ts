@@ -122,12 +122,14 @@ export type Database = {
           direct_booking_pct: number | null
           gross_revenue_ltm: number | null
           headline: string | null
+          hero_image_url: string | null
           id: string
           occupancy_pct: number | null
           owner_id: string | null
           readiness_score: number | null
           region: string | null
           sde: number | null
+          source_url: string | null
           status: string | null
           teaser_paragraph: string | null
           units: number | null
@@ -144,12 +146,14 @@ export type Database = {
           direct_booking_pct?: number | null
           gross_revenue_ltm?: number | null
           headline?: string | null
+          hero_image_url?: string | null
           id?: string
           occupancy_pct?: number | null
           owner_id?: string | null
           readiness_score?: number | null
           region?: string | null
           sde?: number | null
+          source_url?: string | null
           status?: string | null
           teaser_paragraph?: string | null
           units?: number | null
@@ -166,12 +170,14 @@ export type Database = {
           direct_booking_pct?: number | null
           gross_revenue_ltm?: number | null
           headline?: string | null
+          hero_image_url?: string | null
           id?: string
           occupancy_pct?: number | null
           owner_id?: string | null
           readiness_score?: number | null
           region?: string | null
           sde?: number | null
+          source_url?: string | null
           status?: string | null
           teaser_paragraph?: string | null
           units?: number | null
