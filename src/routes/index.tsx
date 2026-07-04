@@ -173,5 +173,3 @@ function Index() {
     </SiteShell>
   );
 }
-  );
-}
