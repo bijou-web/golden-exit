@@ -55,6 +55,7 @@ function DashboardPage() {
           gaps: ((anyRow.gaps as any[]) ?? []).map((g: any) => ({
             label: g.area ?? g.label ?? "",
             fix: g.fix ?? g.impact ?? "",
+            impact: g.impact ?? "",
           })),
           teaser: anyRow.teaser_paragraph ?? "",
           input: {
