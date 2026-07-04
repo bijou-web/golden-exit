@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { SiteShell } from "@/components/sbs/SiteShell";
 import { DealTicket } from "@/components/sbs/DealTicket";
 import { getValuation, type Valuation, formatFull, businessTypeLabel } from "@/lib/sbs-data";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/dashboard/$id")({
   ssr: false,
@@ -12,7 +13,88 @@ export const Route = createFileRoute("/dashboard/$id")({
 function DashboardPage() {
   const { id } = Route.useParams();
   const [v, setV] = useState<Valuation | null>(null);
-  useEffect(() => setV(getValuation(id)), [id]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      // Try Supabase first (real valuation from edge fn)
+      const { data: row } = await supabase
+        .from("valuations")
+        .select("*, valuation_requests(*)")
+        .eq("id", id)
+        .maybeSingle();
+      if (!alive) return;
+      if (row) {
+        const req = (row as any).valuation_requests ?? {};
+        const bt = req.business_type ?? "vr_portfolio";
+        const inputMap: Record<string, Valuation["input"]["business_type"]> = {
+          vr_portfolio: "vacation_rental",
+          boutique_hotel: "boutique_hotel",
+          hotel: "hotel",
+          bnb_inn: "bnb_inn",
+        };
+        const mapped: Valuation = {
+          id: row.id,
+          serial: row.serial ?? "SBS-DRAFT",
+          issued_at: row.created_at ?? new Date().toISOString(),
+          low: Number(row.low),
+          high: Number(row.high),
+          multiple_used: row.multiple_used ?? "",
+          methodology: row.methodology ?? "",
+          readiness_score: row.readiness_score ?? 0,
+          subscores: row.subscores ?? {
+            financial_records: 0,
+            revenue_trend: 0,
+            review_health: 0,
+            owner_dependency: 0,
+            channel_mix: 0,
+          },
+          drivers: row.drivers ?? [],
+          gaps: (row.gaps ?? []).map((g: any) => ({
+            label: g.area ?? g.label ?? "",
+            fix: g.fix ?? g.impact ?? "",
+          })),
+          teaser: row.teaser_paragraph ?? "",
+          input: {
+            business_type: inputMap[bt] ?? "vacation_rental",
+            units: req.units ?? 0,
+            city: req.market_city ?? "",
+            state: req.market_state ?? "",
+            revenue: Number(req.gross_revenue_ltm ?? 0),
+            noi: req.sde !== null && req.sde !== undefined ? Number(req.sde) : null,
+            occupancy: Number(req.occupancy_pct ?? 0),
+            adr: Number(req.adr ?? 0),
+            direct_pct: Number(req.direct_booking_pct ?? 0),
+            review_score: Number(req.avg_review_score ?? 0),
+            owner_hours: req.owner_hours_per_week ?? 0,
+            timeline: (req.sell_timeline ?? "curious") as Valuation["input"]["timeline"],
+            name: req.full_name ?? "",
+            email: req.email ?? "",
+          },
+        };
+        setV(mapped);
+        setLoading(false);
+        return;
+      }
+      // Fallback: local cached valuation (pre-Supabase demos)
+      setV(getValuation(id));
+      setLoading(false);
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [id]);
+
+  if (loading) {
+    return (
+      <SiteShell>
+        <div className="max-w-2xl mx-auto px-6 py-32 text-center">
+          <div className="eyebrow">Loading Deal Ticket…</div>
+        </div>
+      </SiteShell>
+    );
+  }
 
   if (!v) {
     return (
