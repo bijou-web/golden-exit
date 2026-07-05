@@ -95,7 +95,7 @@ function Index() {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(90deg, rgba(247,243,235,0.94) 0%, rgba(247,243,235,0.82) 32%, rgba(247,243,235,0.40) 55%, rgba(247,243,235,0) 78%)",
+                "linear-gradient(90deg, rgba(247,243,235,0.97) 0%, rgba(247,243,235,0.94) 45%, rgba(247,243,235,0.75) 65%, rgba(247,243,235,0.30) 85%, rgba(247,243,235,0) 100%)",
             }}
           />
         </div>
