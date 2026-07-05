@@ -81,9 +81,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Data-verified valuations and a private marketplace for vacation rental portfolios, boutique hotels, and inns. Know what your hospitality business is worth in 60 seconds." },
       { name: "author", content: "Sell Baby Sell" },
       { property: "og:title", content: "Sell Baby Sell — The exit rail for hospitality" },
-      { property: "og:description", content: "AI valuations, exit-readiness scores, and verified buyers for hospitality businesses." },
+      { property: "og:description", content: "Data-verified valuations and a private marketplace for vacation rental portfolios, boutique hotels, and inns. Know what your hospitality business is worth in 60 seconds." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Sell Baby Sell — The exit rail for hospitality" },
+      { name: "twitter:description", content: "Data-verified valuations and a private marketplace for vacation rental portfolios, boutique hotels, and inns. Know what your hospitality business is worth in 60 seconds." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/018bfe0f-2acb-4947-92bf-84213d033533/id-preview-30bed474--1f46a7db-bd8a-4bcc-bb38-a1e95673bce7.lovable.app-1783237763028.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/018bfe0f-2acb-4947-92bf-84213d033533/id-preview-30bed474--1f46a7db-bd8a-4bcc-bb38-a1e95673bce7.lovable.app-1783237763028.png" },
     ],
     links: [
       {
