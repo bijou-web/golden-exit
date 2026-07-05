@@ -98,10 +98,6 @@ function Index() {
                 "linear-gradient(90deg, rgba(247,243,235,0.94) 0%, rgba(247,243,235,0.82) 32%, rgba(247,243,235,0.40) 55%, rgba(247,243,235,0) 78%)",
             }}
           />
-          <div
-            className="hidden md:block absolute bottom-8 left-8 w-24 h-24 border-l border-b"
-            style={{ borderColor: "color-mix(in oklab, var(--brass) 30%, transparent)" }}
-          />
         </div>
         <div className="relative content-shell py-24 md:py-32 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
           <div className="reveal">
