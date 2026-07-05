@@ -103,14 +103,11 @@ function Index() {
           <div className="reveal">
             <div className="eyebrow">The Baby Boomer exit rail for hospitality</div>
             <h1 className="mt-6 font-display text-5xl md:text-6xl leading-[1.02] text-ink">
-              Baby Boomers built it.
-              <br />
-              Now know what it's worth —
-              <br />
-              <span className="text-[var(--brass)]">in 60 seconds.</span>
+              The Baby Boomer marketplace where{" "}
+              <span className="text-[var(--brass)]">AI agents sell your life's work.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg text-[var(--sage)] leading-relaxed">
-              The exit marketplace built for the Boomer generation of hospitality owners. Connect your booking data. Get a real valuation, an exit-readiness score, and qualified buyers — without a broker who's never heard of ADR.
+              You built it over 30 years. Our agentic AI values it from your real booking data, prepares it for sale, and matches verified buyers — in 60 seconds, not 6 months.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/valuation" className="btn-ink">Get your free valuation</Link>
