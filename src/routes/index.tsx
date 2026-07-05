@@ -122,17 +122,31 @@ function Index() {
 
       {/* STAT BAND */}
       <section className="bg-ink text-[var(--paper)]">
-        <div className="max-w-7xl mx-auto px-6 py-16 grid gap-10 md:grid-cols-3">
-          {[
-            { n: "$10T", l: "in small-business value changes hands this decade" },
-            { n: "51%", l: "of owners are 55+ and eyeing an exit" },
-            { n: "0", l: "marketplaces built for hospitality data — until now" },
-          ].map((s) => (
-            <div key={s.n} className="border-t border-[var(--paper)]/20 pt-6">
-              <div className="font-mono-num text-4xl md:text-5xl text-[var(--brass)]">{s.n}</div>
-              <div className="mt-3 text-sm text-[var(--paper)]/70 max-w-xs leading-relaxed">{s.l}</div>
-            </div>
-          ))}
+        <div className="max-w-7xl mx-auto px-6 py-24 md:py-28">
+          <div className="grid gap-10 md:grid-cols-3">
+            {[
+              { n: "6,000,000", l: "boomer businesses in transition by 2035" },
+              { n: "1,000,000", l: "expected to actually sell" },
+              { n: "5 of 6", l: "will not" },
+            ].map((s) => (
+              <div key={s.n} className="border-t border-[var(--paper)]/20 pt-6">
+                <div className="font-mono-num text-4xl md:text-5xl text-[var(--brass)]">{s.n}</div>
+                <div className="mt-3 text-sm text-[var(--paper)]/70 max-w-xs leading-relaxed">{s.l}</div>
+              </div>
+            ))}
+          </div>
+          <p
+            className="mt-16 text-center mx-auto max-w-3xl"
+            style={{
+              fontFamily: '"Instrument Sans", ui-sans-serif, system-ui, sans-serif',
+              fontSize: "16px",
+              lineHeight: 1.6,
+              color: "var(--paper)",
+              opacity: 0.7,
+            }}
+          >
+            Source: McKinsey Institute for Economic Mobility, "The Great Ownership Transfer," 2026 — "without intentional action, many viable small businesses may close rather than transfer ownership."
+          </p>
         </div>
       </section>
 
