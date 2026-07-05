@@ -99,7 +99,7 @@ function Index() {
             }}
           />
         </div>
-        <div className="relative content-shell py-24 md:py-32 grid gap-16 lg:grid-cols-[1.1fr_1fr] items-center">
+        <div className="relative content-shell py-24 md:py-32">
           <div className="reveal">
             <div className="eyebrow">The Baby Boomer exit rail for hospitality</div>
             <h1 className="mt-6 font-display text-5xl md:text-6xl leading-[1.02] text-ink">
@@ -119,18 +119,6 @@ function Index() {
             <div className="mt-8 font-mono-num text-xs text-[var(--sage)] tracking-wider">
               NO CARD · NO BROKER · NO OBLIGATION
             </div>
-          </div>
-          <div className="reveal" style={{ animationDelay: "0.15s" }}>
-            <DealTicket
-              serial="SBS-2026-00142"
-              low={2100000}
-              high={2600000}
-              methodology="4.6× SDE"
-              readiness={84}
-              headline="12-unit vacation rental portfolio"
-              subhead="Sedona, AZ · Data-verified · Live example"
-              verified
-            />
           </div>
         </div>
       </section>
