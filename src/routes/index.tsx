@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteShell } from "@/components/sbs/SiteShell";
 import { DealTicket } from "@/components/sbs/DealTicket";
+import { MeetTheAgents } from "@/components/sbs/MeetTheAgents";
 import { SEED_LISTINGS } from "@/lib/sbs-data";
 import { listingDisplayImage } from "@/lib/listing-images";
 import { supabase } from "@/integrations/supabase/client";
@@ -197,6 +198,7 @@ function Index() {
       </section>
 
       {/* MARKETPLACE PREVIEW */}
+      <MeetTheAgents />
       {/* VOICES — what industry leaders are saying about the boomer exit */}
       <section className="bg-ink text-[var(--paper)]">
         <div className="content-shell py-24 md:py-28">
